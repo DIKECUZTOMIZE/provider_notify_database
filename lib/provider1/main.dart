@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_database/counter_provider.dart';
+import 'package:provider_database/provider1/counter_provider.dart';
 
 
 /// State Management: base
