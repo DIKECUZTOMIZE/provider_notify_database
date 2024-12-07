@@ -1,10 +1,11 @@
 
-import 'package:ane/provider/database_provider/databasePage1.dart';
-import 'package:ane/provider/database_provider/databaseProvider.dart';
-import 'package:ane/provider/database_provider/dbHelper_provider.dart';
-import 'package:ane/provider/database_provider/modaleNote.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_database/provider/database_provider/databasePage1.dart';
+import 'package:provider_database/provider/database_provider/databaseProvider.dart';
+import 'package:provider_database/provider/database_provider/modaleNote.dart';
+
+import 'dbHelper_provider.dart';
 
 
 
@@ -14,6 +15,7 @@ class DatabaseProviderPage1 extends StatefulWidget {
 }
 
 class _DatabaseProviderPage1State extends State<DatabaseProviderPage1> {
+
   DbHelperProvider dbHelperProvider = DbHelperProvider.getInstance();
 
   List<NoteModel> myData = [];
@@ -21,15 +23,10 @@ class _DatabaseProviderPage1State extends State<DatabaseProviderPage1> {
   @override
   void initState() {
     super.initState();
-    /// read value chane
     context.read<DBProvider>().getInitialNotes();
-    //  getNotes();
   }
 
-  // void getNotes()async{
-  //   myData=await  dbHelperProvider.fectNote();
-  //   setState(() {});
-  // }
+
   @override
   Widget build(BuildContext context) {
     myData = context.watch<DBProvider>().getAllNotes();
@@ -42,8 +39,8 @@ class _DatabaseProviderPage1State extends State<DatabaseProviderPage1> {
           ? ListView.builder(
         itemCount: myData.length,
         itemBuilder: (context, index) => ListTile(
-          title: Text(myData[index].title),
-          subtitle: Text(myData[index].desc),
+          title: Text(myData[index].titleM),
+          subtitle: Text(myData[index].descM),
           trailing: SizedBox(
             width: 70,
             child: Row(
@@ -51,7 +48,13 @@ class _DatabaseProviderPage1State extends State<DatabaseProviderPage1> {
 
                 InkWell(
                   onTap: () {
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => DatabasePage1(isupdate: true,),));
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => DatabasePage1(
+                     isUpdateAndAdd: true,
+                      id1: myData[index].idM,
+                     title1: myData[index].titleM,
+                     desc1: myData[index].descM,
+
+                   ),));
                   },
                   child: Icon(Icons.edit),
                 ),
@@ -59,9 +62,9 @@ class _DatabaseProviderPage1State extends State<DatabaseProviderPage1> {
 
                 InkWell(
                   onTap: () async{
-                 //   bool chek = await dbHelperProvider.deletNote(deletID: myData[index].id!);
+                       context.read<DBProvider>().delet(nId:myData[index].idM!);
 
-                    context.read<DBProvider>().delet(nId:myData[index].id!);
+
                   },
                   child: Icon(
                     Icons.delete,
@@ -78,9 +81,7 @@ class _DatabaseProviderPage1State extends State<DatabaseProviderPage1> {
         onPressed: () {
           Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => DatabasePage1(isupdate: false,),
-              ));
+              MaterialPageRoute(builder: (context) =>DatabasePage1()));
         },
         child: Text('next '),
       ),

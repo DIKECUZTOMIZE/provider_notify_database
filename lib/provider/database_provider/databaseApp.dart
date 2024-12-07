@@ -1,9 +1,9 @@
-import 'package:ane/provider/database_provider/dataBaseHomePage1.dart';
 
-import 'package:ane/provider/database_provider/databaseProvider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:provider_database/provider/database_provider/dataBaseHomePage1.dart';
+import 'package:provider_database/provider/database_provider/databaseProvider.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
